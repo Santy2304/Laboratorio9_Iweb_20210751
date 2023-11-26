@@ -1,4 +1,7 @@
-<%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %><%--
+<%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.laboratorio9_20210751.Beans.Curso" %>
+<%@ page import="com.example.laboratorio9_20210751.Daos.DaoFacultadHasDecano" %><%--
   Created by IntelliJ IDEA.
   User: Santiago
   Date: 24/11/2023
@@ -7,6 +10,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");%>
+<%ArrayList<Curso> listaCursos   = (ArrayList<Curso>) request.getAttribute("listaCursos");  %>
+
 <html>
 <head>
 
@@ -20,13 +25,13 @@
     <jsp:include page="../Includes/NavBar.jsp"></jsp:include>
 
 <div class="container mt-5">
+    <%  DaoFacultadHasDecano daoFacultadHasDecano = new DaoFacultadHasDecano();%>
     <div class="row mb-5 mt-4">
         <div class="col-md-7">
-            <h1>Lista de Docentes</h1>
+            <h1>Lista de Cursos</h1>
         </div>
         <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/ListaDocentesServlet?action=agregar" class="btn btn-primary">Agregar
-                nuevo Docente</a>
+            <a href="<%= request.getContextPath()%>/ListaCursosServlet?action=crear" class="btn btn-primary">Nuevo Curso</a>
         </div>
     </div>
 
@@ -37,30 +42,31 @@
             <th class="text-center">#ID</th>
             <th class="text-center">Codigo</th>
             <th class="text-center">Nombre</th>
-            <th class="text-center">Facultad</th>
+
             <th class="text-center">Fecha Registro</th>
             <th class="text-center">Fecha Edición</th>
             <th></th>
             <th></th>
-            <!--
-        <% //if(usuarioLogueado != null && usuarioLogueado.getEmployeeId() > 0) {%>
-        <th></th>
-        <th></th>
-        <% //} %>-->
+
         </tr>
 
 
         </thead>
         <tbody>
+        <%for (Curso c : listaCursos){
+
+            int idFacultadUsuario = daoFacultadHasDecano.facultadPorIdDecano(usuario.getIdUsuario());
+            if(c.getFacultad().getIdFacultad()==idFacultadUsuario){
+        %>
+
         <tr>
-            <td class="text-center" >1</td>
-            <td class="text-center">Josh</td>
-            <td class="text-center">corred</td>
-            <td class="text-center">nose</td>
-            <td class="text-center">hoy</td>
-            <td class="text-center">joiefre</td>
+            <td class="text-center" ><%=c.getIdCurso()%></td>
+            <td class="text-center"><%=c.getCodigo()%></td>
+            <td class="text-center"><%=c.getNombre()%></td>
+            <td class="text-center"><%=c.getFechaRegistro()%></td>
+            <td class="text-center"><%=c.getFechaEdicion()%></td>
             <td class="text-center">
-                <a href="#"
+                <a href="<%=request.getContextPath()%>/ListaCursosServlet?action=editar&id=<%= c.getIdCurso()%>"
                    type="button" class="btn btn-primary">
                     <i class="bi bi-pencil-square"></i>
                 </a>
@@ -68,7 +74,7 @@
 
             <td class="text-center">
                 <a onclick="return confirm('¿Estas seguro de borrar?');"
-                   href="#"
+                   href="<%=request.getContextPath()%>/ListaCursosServlet?action=borrar&id=<%= c.getIdCurso()%>"
                    type="button" class="btn btn-danger">
                     <i class="bi bi-trash"></i>
                 </a>
@@ -76,6 +82,8 @@
 
 
         </tr>
+        <%}%>
+        <%}%>
 
 
         </tbody>

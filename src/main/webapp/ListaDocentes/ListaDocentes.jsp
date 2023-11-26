@@ -55,18 +55,18 @@
     </thead>
     <tbody>
 
-    <%for (Usuario u : listaDocentes){
+    <%//for (Usuario u : listaDocentes){
 
     %>
     <tr>
-        <td class="text-center" >1</td>
-        <td class="text-center">Josh</td>
-        <td class="text-center">corred</td>
-        <td class="text-center">nose</td>
-        <td class="text-center">hoy</td>
-        <td class="text-center">joiefre</td>
-        <td class="text-center">ferjfo</td>
-        <td class="text-center">ifi</td>
+        <td class="text-center" ><%=u.getIdUsuario()%></td>
+        <td class="text-center"><%=u.getNombre()%></td>
+        <td class="text-center"><%=u.getCorreo()%></td>
+        <td class="text-center">curso</td>
+        <td class="text-center"><%=u.getUltimoIngreso()%></td>
+        <td class="text-center"><%=u.getCantIngresos()%></td>
+        <td class="text-center"><%=u.getFechaRegistro()%></td>
+        <td class="text-center"><%=u.getFechaEdicion()%></td>
         <td class="text-center">
             <a href="#"
                type="button" class="btn btn-primary">
@@ -85,7 +85,7 @@
 
     </tr>
 
-    <%}%>
+    <%//}%>
 
 
     </tbody>

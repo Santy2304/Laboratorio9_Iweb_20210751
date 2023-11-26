@@ -11,25 +11,23 @@ import java.util.ArrayList;
 public class DaoCurso extends DaoBase{
 
 
-    public ArrayList<Curso> listarCursosPorFacultad(int idFacultad) {
+    public ArrayList<Curso> listarCursosPorFacultad() {
         ArrayList<Curso> listaCursos = new ArrayList<>();
 
         String sql = "SELECT * FROM curso c \n"
-                + "left join facultad f on (f.idfacultad = c.idfacultad) where idFacultad=?";
+                + "left join facultad f on (f.idfacultad = c.idfacultad)";
 
         try (Connection conn = this.getConection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)) {
 
-            pstmt.setInt(1, idFacultad);
-
-            try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Curso curso = new Curso();
                     fetchCursoData(curso, rs);
 
                     listaCursos.add(curso);
                 }
-            }
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
