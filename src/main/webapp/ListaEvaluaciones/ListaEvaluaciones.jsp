@@ -1,6 +1,7 @@
 <%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.laboratorio9_20210751.Beans.Evaluaciones" %><%--
+<%@ page import="com.example.laboratorio9_20210751.Beans.Evaluaciones" %>
+<%@ page import="com.example.laboratorio9_20210751.Daos.DaoCursoHasDocente" %><%--
   Created by IntelliJ IDEA.
   User: Santiago
   Date: 24/11/2023
@@ -31,8 +32,8 @@
             <h1>Lista de Evaluaciones</h1>
         </div>
         <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/ListaDocentesServlet?action=agregar" class="btn btn-primary">Agregar
-                nuevo Docente</a>
+            <a href="<%= request.getContextPath()%>/ListaEvaluacionesServlet?action=crear" class="btn btn-primary">Agregar
+                nueva Evaluación</a>
         </div>
     </div>
 
@@ -58,9 +59,14 @@
         </thead>
         <tbody>
 
-        <%for (Evaluaciones e : listaEvaluaciones){
+        <%
+            DaoCursoHasDocente daoCursoHasDocente = new DaoCursoHasDocente();
 
-          //  if (e.getCurso().getIdCurso()==
+            int cursoDocente = daoCursoHasDocente.cursoPorIdDocente(usuario.getIdUsuario());
+            for (Evaluaciones e : listaEvaluaciones){
+
+
+           if (e.getCurso().getIdCurso()==cursoDocente){
 
         %>
 
@@ -75,7 +81,7 @@
             <td class="text-center"><%=e.getFechaRegistro()%></td>
             <td class="text-center"><%=e.getFechaEdicion()%></td>
             <td class="text-center">
-                <a href="#"
+                <a href="<%=request.getContextPath()%>/ListaEvaluacionesServlet?action=editar&id=<%= e.getIdEvaluaciones()%>"
                    type="button" class="btn btn-primary">
                     <i class="bi bi-pencil-square"></i>
                 </a>
@@ -91,7 +97,7 @@
 
 
         </tr>
-
+        <%}%>
         <%}%>
         </tbody>
     </table>

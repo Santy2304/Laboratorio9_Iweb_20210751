@@ -13,6 +13,16 @@
 
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
+
+                <%if (usuario.getRol().getIdRol()==4){%>
+
+
+                <li class="nav-item mx-2">
+                    <!--<a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
+                    <a class="nav-link active" href="<%=request.getContextPath()%>/ListaEvaluacionesServlet">Evaluaciones</a>
+                </li>
+
+                <%} else {%>
                 <li class="nav-item mx-2">
                     <!--<a class="nav-link active" aria-current="page" href="#">Menú</a>-->
                     <a class="nav-link active" aria-current="page" href="<%=request.getContextPath()%>/ListaCursosServlet">Cursos</a>
@@ -20,11 +30,8 @@
                 <li class="nav-item mx-2">
                     <a class="nav-link active" href="<%=request.getContextPath()%>/ListaDocentesServlet">Docentes</a>
                 </li>
-                <li class="nav-item mx-2">
-                    <!--<a class="nav-link disabled" aria-disabled="true">Disabled</a>-->
-                    <a class="nav-link active" href="<%=request.getContextPath()%>/ListaEvaluacionesServlet">Evaluaciones</a>
-                </li>
 
+                <%}%>
             </ul>
 
             <button type="button" class="btn btn-danger" onclick="cerrarSesion()">Cerrar Sesión</button>

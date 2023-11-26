@@ -14,7 +14,7 @@ public class DaoEvaluaciones extends DaoBase{
         ArrayList<Evaluaciones> listaEvaluaciones = new ArrayList<>();
 
         String sql = "SELECT * FROM evaluaciones e \n"
-                + "left join cursos c on (c.idcurso = e.idcurso) \n"+
+                + "left join curso c on (c.idcurso = e.idcurso) \n"+
                 "left join semestre s on (e.idsemestre = s.idsemestre)";
 
         try (Connection conn = this.getConection();
@@ -57,6 +57,37 @@ public class DaoEvaluaciones extends DaoBase{
         evaluaciones.setFechaRegistro(rs.getString(8));
         evaluaciones.setFechaEdicion(rs.getString(9));
 
+    }
+
+
+
+
+    public Evaluaciones obtenerEvaluacion(int employeeId) {
+
+        Evaluaciones evaluaciones = null;
+
+        String sql = "SELECT * FROM evaluaciones e \n"
+                + "left join cursos c ON (c.idcurso = e.idcurso) \n"
+                + "left join semestre s ON (s.idsemestre = e.idsemestre)\n"
+                + "WHERE e.idevaluaciones = ?";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, employeeId);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    evaluaciones = new Evaluaciones();
+                    fetchEvaluacionData(evaluaciones, rs);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return evaluaciones;
     }
 
 }

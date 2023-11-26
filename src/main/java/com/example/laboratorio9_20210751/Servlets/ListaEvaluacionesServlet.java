@@ -1,5 +1,6 @@
 package com.example.laboratorio9_20210751.Servlets;
 
+import com.example.laboratorio9_20210751.Beans.Evaluaciones;
 import com.example.laboratorio9_20210751.Daos.DaoEvaluaciones;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -24,9 +25,19 @@ public class ListaEvaluacionesServlet extends HttpServlet {
 
             case "crear":
 
+                request.getRequestDispatcher("ListaEvaluaciones/CrearEvaluacion.jsp").forward(request,response);
+
                 break;
 
             case "editar":
+                String idEvaluacionStr = request.getParameter("id");
+
+                int idEvaluacion = Integer.parseInt(idEvaluacionStr);
+
+                Evaluaciones evaluacion = daoEvaluaciones.obtenerEvaluacion(idEvaluacion);
+
+                request.setAttribute("evaluacion",evaluacion);
+                request.getRequestDispatcher("ListaEvaluaciones/EditarEvaluacion.jsp").forward(request,response);
 
                 break;
 
