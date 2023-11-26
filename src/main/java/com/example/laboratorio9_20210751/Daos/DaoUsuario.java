@@ -132,6 +132,21 @@ public class DaoUsuario extends DaoBase {
     }
 
 
+    public void actualizar(Usuario docente) throws SQLException {
+
+        String sql = "UPDATE usuario SET nombre= ?, fecha_edicion= Now() WHERE idusuario = ?";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setString(1, docente.getNombre());
+            pstmt.setInt(2,docente.getIdUsuario());
+            pstmt.executeUpdate();
+
+        }
+
+    }
+
+
 
 
 }

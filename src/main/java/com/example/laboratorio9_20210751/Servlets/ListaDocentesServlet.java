@@ -1,5 +1,6 @@
 package com.example.laboratorio9_20210751.Servlets;
 
+import com.example.laboratorio9_20210751.Beans.Curso;
 import com.example.laboratorio9_20210751.Beans.Evaluaciones;
 import com.example.laboratorio9_20210751.Beans.Usuario;
 import com.example.laboratorio9_20210751.Daos.DaoEvaluaciones;
@@ -56,6 +57,38 @@ public class ListaDocentesServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
+        DaoUsuario daoUsuario = new DaoUsuario();
+
+        switch (action){
+
+            case "crear":
+
+                break;
+
+            case "editar":
+
+                String iddocente = request.getParameter("iddocente");
+                String nombre = request.getParameter("nombre");
+
+                Usuario usuario = new Usuario();
+
+                usuario.setIdUsuario(Integer.parseInt(iddocente));
+                usuario.setNombre(nombre);
+
+
+                try {
+                    daoUsuario.actualizar(usuario);
+                    response.sendRedirect(request.getContextPath() + "/ListaDocentesServlet");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                break;
+
+        }
+
 
     }
 }
