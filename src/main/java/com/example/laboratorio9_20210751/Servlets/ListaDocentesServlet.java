@@ -50,6 +50,26 @@ public class ListaDocentesServlet extends HttpServlet {
                 request.setAttribute("docente",docente);
                 request.getRequestDispatcher("ListaDocentes/EditarDocente.jsp").forward(request,response);
                 break;
+
+
+            case "borrar":
+
+                String iddStr = request.getParameter("id");
+                int idd = Integer.parseInt(iddStr);
+
+                Usuario docenteParaBorrar = daoUsuario.obtenerDocentePorId(idd);
+
+                if(docenteParaBorrar != null){
+                    try {
+                        daoUsuario.borrarDocente(idd);
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+                response.sendRedirect(request.getContextPath() + "/ListaDocentesServlet");
+
+                break;
         }
 
 

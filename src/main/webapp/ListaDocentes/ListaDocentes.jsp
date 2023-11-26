@@ -87,11 +87,16 @@
         </td>
 
         <td class="text-center">
+
+            <%if (idcurso==0){%>
             <a onclick="return confirm('¿Estas seguro de borrar?');"
-               href="<%=request.getContextPath()%>/ListaDocentesServlet?borrar=editar&id=<%= u.getIdUsuario()%>"
+               href="<%=request.getContextPath()%>/ListaDocentesServlet?action=borrar&id=<%= u.getIdUsuario()%>"
                type="button" class="btn btn-danger">
                 <i class="bi bi-trash"></i>
             </a>
+            <%}else {%>
+            Posee un curso asignado
+            <%}%>
         </td>
 
 

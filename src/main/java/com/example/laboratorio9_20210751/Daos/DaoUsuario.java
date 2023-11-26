@@ -146,7 +146,28 @@ public class DaoUsuario extends DaoBase {
 
     }
 
+    public void actualizarFechas(Usuario docente) throws SQLException {
 
+        String sql = "UPDATE usuario SET cantidad_ingresos = cantidad_ingresos + 1, \n" +
+                " ultimo_ingreso = Now()\n" +
+                "WHERE idusuario=?;";
 
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1,docente.getIdUsuario());
+            pstmt.executeUpdate();
+
+        }
+
+    }
+
+    public void borrarDocente(int idUsuario) throws SQLException {
+        String sql = "DELETE FROM usuario WHERE idusuario = ?";
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+            pstmt.setInt(1, idUsuario);
+            pstmt.executeUpdate();
+        }
+    }
 
 }

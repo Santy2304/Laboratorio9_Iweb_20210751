@@ -8,6 +8,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "LoginServlet", value = "")
 public class LoginServlet extends HttpServlet {
@@ -46,6 +47,11 @@ public class LoginServlet extends HttpServlet {
 
             int rol = daoUsuario.obtenerUsuarioPorCorreo(correo).getRol().getIdRol();
 
+            try {
+                daoUsuario.actualizarFechas(daoUsuario.obtenerUsuarioPorCorreo(correo));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             if (rol==3){
 
                 response.sendRedirect("ListaCursosServlet");
