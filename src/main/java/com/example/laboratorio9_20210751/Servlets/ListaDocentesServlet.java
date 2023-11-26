@@ -16,9 +16,8 @@ public class ListaDocentesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //Usuario usuario =  new Usuario();
-        //usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
-
+        Usuario usuario =  new Usuario();
+        usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");
 
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         DaoUsuario daoUsuario = new DaoUsuario();
@@ -28,6 +27,8 @@ public class ListaDocentesServlet extends HttpServlet {
 
             case "lista":
                 request.setAttribute("listaDocentes",daoUsuario.listarDocentes());
+                HttpSession httpSession = request.getSession();
+                httpSession.setAttribute("usuarioLogueado",usuario);
                 request.getRequestDispatcher("ListaDocentes/ListaDocentes.jsp").forward(request, response);
                 break;
 
@@ -37,18 +38,18 @@ public class ListaDocentesServlet extends HttpServlet {
 
                 break;
 
+            case "editar":
 
+                String iddocenteStr = request.getParameter("id");
 
+                int iddocente = Integer.parseInt(iddocenteStr);
+
+                Usuario docente = daoUsuario.obtenerDocentePorId(iddocente);
+
+                request.setAttribute("docente",docente);
+                request.getRequestDispatcher("ListaDocentes/EditarDocente.jsp").forward(request,response);
+                break;
         }
-
-
-
-
-
-
-        request.getRequestDispatcher("ListaDocentes/ListaDocentes.jsp").forward(request, response);
-
-
 
 
     }

@@ -164,6 +164,26 @@ public class DaoCurso extends DaoBase{
         return exito;
     }
 
+    public int obtenerIdFacultad(int idcurso){
+
+
+        String sql="select idfacultad from curso where idcurso=?";
+        try(Connection conn=this.getConection();
+            PreparedStatement pstmt= conn.prepareStatement(sql)){
+
+            pstmt.setInt(1,idcurso);
+
+            try(ResultSet rs=pstmt.executeQuery()){
+                if(rs.next()){
+                    return rs.getInt(1);
+                }else
+                    return 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.laboratorio9_20210751.Daos;
 
 import com.example.laboratorio9_20210751.Beans.Curso;
+import com.example.laboratorio9_20210751.Beans.Evaluaciones;
 import com.example.laboratorio9_20210751.Beans.Rol;
 import com.example.laboratorio9_20210751.Beans.Usuario;
 
@@ -101,6 +102,36 @@ public class DaoUsuario extends DaoBase {
         usuario.setFechaEdicion(rs.getString(9));
 
     }
+
+
+
+    public Usuario obtenerDocentePorId(int idUsuario) {
+
+        Usuario usuario = null;
+
+        String sql = "SELECT * FROM usuario u \n"
+                +  "WHERE u.idusuario = ? and u.idrol=4";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, idUsuario);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+
+                if (rs.next()) {
+                    usuario = new Usuario();
+                    fetchUsuarioData(usuario, rs);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return usuario;
+    }
+
+
 
 
 }
