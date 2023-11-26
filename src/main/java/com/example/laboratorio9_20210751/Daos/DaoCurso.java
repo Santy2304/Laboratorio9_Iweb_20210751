@@ -14,7 +14,7 @@ public class DaoCurso extends DaoBase{
     public ArrayList<Curso> listarCursosPorFacultad(int idFacultad) {
         ArrayList<Curso> listaCursos = new ArrayList<>();
 
-        String sql = "SELECT * FROM cursos c \n"
+        String sql = "SELECT * FROM curso c \n"
                 + "left join facultad f on (f.idfacultad = c.idfacultad) where idFacultad=?";
 
         try (Connection conn = this.getConection();

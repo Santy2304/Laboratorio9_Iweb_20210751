@@ -116,7 +116,7 @@
 <main class="form-signin w-100 m-auto">
     <form method="post" action="<%=request.getContextPath()%>/" class="text-center">
        <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">-->
-        <h1 class="h3 mb-4 fw-normal">Coloque sus credenciales</h1>
+        <h1 class="h3 mb-4 fw-normal">Registro</h1>
 
         <!-- Utilizando una fila para centrar horizontalmente -->
 

@@ -1,4 +1,5 @@
-<%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %><%--
+<%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: Santiago
   Date: 24/11/2023
@@ -7,6 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogueado");%>
+<%ArrayList<Usuario> listaDocentes   = (ArrayList<Usuario>) request.getAttribute("listaDocentes");  %>
+
 <html>
 <head>
 
@@ -41,20 +44,20 @@
         <th class="text-center">Curso</th>
         <th class="text-center">Último Ingreso</th>
         <th class="text-center">Cantidad Ingresos</th>
-        <th class="text-center">Fecha Registro</th>
+        <th class="text-center">Registro</th>
         <th class="text-center">Fecha Edición</th>
         <th></th>
         <th></th>
-       <!--
-        <% //if(usuarioLogueado != null && usuarioLogueado.getEmployeeId() > 0) {%>
-        <th></th>
-        <th></th>
-        <% //} %>-->
+
     </tr>
 
 
     </thead>
     <tbody>
+
+    <%for (Usuario u : listaDocentes){
+
+    %>
     <tr>
         <td class="text-center" >1</td>
         <td class="text-center">Josh</td>
@@ -81,6 +84,8 @@
 
 
     </tr>
+
+    <%}%>
 
 
     </tbody>

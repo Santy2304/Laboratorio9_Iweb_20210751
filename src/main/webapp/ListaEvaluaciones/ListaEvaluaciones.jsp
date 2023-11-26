@@ -27,13 +27,13 @@
 
 
 <div class="container mt-5">
+    <%  DaoCursoHasDocente daoCursoHasDocente = new DaoCursoHasDocente();%>
     <div class="row mb-5 mt-4">
         <div class="col-md-7">
             <h1>Lista de Evaluaciones</h1>
         </div>
         <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/ListaEvaluacionesServlet?action=crear" class="btn btn-primary">Agregar
-                nueva Evaluación</a>
+            <a href="<%= request.getContextPath()%>/ListaEvaluacionesServlet?action=crear&idcurso=<%=daoCursoHasDocente.cursoPorIdDocente(usuario.getIdUsuario())%>" class="btn btn-primary">Nueva Evaluación</a>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
             <th class="text-center">Correo Estudiante</th>
             <th class="text-center">Nota</th>
             <th class="text-center">Semestre</th>
-            <th class="text-center">Fecha Registro</th>
+            <th class="text-center">Registro</th>
             <th class="text-center">Fecha Edición</th>
             <th></th>
             <th></th>
@@ -60,8 +60,6 @@
         <tbody>
 
         <%
-            DaoCursoHasDocente daoCursoHasDocente = new DaoCursoHasDocente();
-
             int cursoDocente = daoCursoHasDocente.cursoPorIdDocente(usuario.getIdUsuario());
             for (Evaluaciones e : listaEvaluaciones){
 
@@ -89,7 +87,7 @@
 
             <td class="text-center">
                 <a onclick="return confirm('¿Estas seguro de borrar?');"
-                   href="#"
+                   href="<%=request.getContextPath()%>/ListaEvaluacionesServlet?action=borrar&id=<%= e.getIdEvaluaciones()%>"
                    type="button" class="btn btn-danger">
                     <i class="bi bi-trash"></i>
                 </a>
