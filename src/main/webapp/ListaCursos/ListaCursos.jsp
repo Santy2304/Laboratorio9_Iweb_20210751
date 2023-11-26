@@ -1,7 +1,8 @@
 <%@ page import="com.example.laboratorio9_20210751.Beans.Usuario" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.laboratorio9_20210751.Beans.Curso" %>
-<%@ page import="com.example.laboratorio9_20210751.Daos.DaoFacultadHasDecano" %><%--
+<%@ page import="com.example.laboratorio9_20210751.Daos.DaoFacultadHasDecano" %>
+<%@ page import="com.example.laboratorio9_20210751.Daos.DaoCurso" %><%--
   Created by IntelliJ IDEA.
   User: Santiago
   Date: 24/11/2023
@@ -31,7 +32,7 @@
             <h1>Lista de Cursos</h1>
         </div>
         <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/ListaCursosServlet?action=crear" class="btn btn-primary">Nuevo Curso</a>
+            <a href="<%= request.getContextPath()%>/ListaCursosServlet?action=crear&idFacultad=<%=daoFacultadHasDecano.facultadPorIdDecano(usuario.getIdUsuario())%>" class="btn btn-primary">Nuevo Curso</a>
         </div>
     </div>
 
@@ -73,11 +74,19 @@
             </td>
 
             <td class="text-center">
+                <% DaoCurso daoCurso = new DaoCurso();
+                if (daoCurso.validarCursoBorrar(c.getIdCurso())){
+                %>
+
                 <a onclick="return confirm('¿Estas seguro de borrar?');"
                    href="<%=request.getContextPath()%>/ListaCursosServlet?action=borrar&id=<%= c.getIdCurso()%>"
                    type="button" class="btn btn-danger">
                     <i class="bi bi-trash"></i>
                 </a>
+
+                <%}else{%>
+                Posee evaluaciones
+                <%}%>
             </td>
 
 

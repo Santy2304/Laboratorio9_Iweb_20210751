@@ -62,30 +62,10 @@ public class DaoUsuario extends DaoBase {
     }
 
 
-
-    private void fetchUsuarioData(Usuario usuario, ResultSet rs) throws SQLException {
-        usuario.setIdUsuario(rs.getInt(1));
-        usuario.setNombre(rs.getString(2));
-        usuario.setCorreo(rs.getString(3));
-        usuario.setContrasena(rs.getString(4));
-
-        Rol rol = new Rol();
-        rol.setIdRol(rs.getInt(5));
-        rol.setNombre(rs.getString("r.nombre"));
-        usuario.setRol(rol);
-
-        usuario.setUltimoIngreso(rs.getString(6));
-        usuario.setCantIngresos(rs.getInt(7));
-        usuario.setFechaRegistro(rs.getString(8));
-        usuario.setFechaEdicion(rs.getString(9));
-
-    }
-
-
     public ArrayList<Usuario> listarDocentes() {
         ArrayList<Usuario> listaDocentes = new ArrayList<>();
 
-        String sql = "SELECT * FROM Usuario where rol = 4";
+        String sql = "SELECT * FROM usuario u where idrol = 4";
 
         try (Connection conn = this.getConection();
              Statement stmt = conn.createStatement();
@@ -102,6 +82,24 @@ public class DaoUsuario extends DaoBase {
         }
 
         return listaDocentes;
+    }
+
+
+    private void fetchUsuarioData(Usuario usuario, ResultSet rs) throws SQLException {
+        usuario.setIdUsuario(rs.getInt(1));
+        usuario.setNombre(rs.getString(2));
+        usuario.setCorreo(rs.getString(3));
+        usuario.setContrasena(rs.getString(4));
+
+        Rol rol = new Rol();
+        rol.setIdRol(rs.getInt(5));
+        usuario.setRol(rol);
+
+        usuario.setUltimoIngreso(rs.getString(6));
+        usuario.setCantIngresos(rs.getInt(7));
+        usuario.setFechaRegistro(rs.getString(8));
+        usuario.setFechaEdicion(rs.getString(9));
+
     }
 
 

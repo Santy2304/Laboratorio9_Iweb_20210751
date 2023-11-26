@@ -17,7 +17,6 @@ public class ListaEvaluacionesServlet extends HttpServlet {
 
         String action = request.getParameter("action") == null ? "lista" : request.getParameter("action");
         DaoEvaluaciones daoEvaluaciones = new DaoEvaluaciones();
-
         switch (action){
 
             case "lista":
