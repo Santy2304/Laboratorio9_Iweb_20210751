@@ -39,7 +39,7 @@
             <h1>Lista de Docentes</h1>
         </div>
         <div class="col-md-5 col-lg-4 ms-auto my-auto text-md-end">
-            <a href="<%= request.getContextPath()%>/ListaDocentesServlet?action=agregar" class="btn btn-primary">Nuevo Docente</a>
+            <a href="<%= request.getContextPath()%>/ListaDocentesServlet?action=crear" class="btn btn-primary">Nuevo Docente</a>
         </div>
     </div>
 
@@ -75,7 +75,11 @@
         <td class="text-center" ><%=u.getIdUsuario()%></td>
         <td class="text-center"><%=u.getNombre()%></td>
         <td class="text-center"><%=u.getCorreo()%></td>
+        <%if (u.getUltimoIngreso()==null){%>
+        <td class="text-center">Nunca</td>
+        <%}else {%>
         <td class="text-center"><%=u.getUltimoIngreso()%></td>
+        <%}%>
         <td class="text-center"><%=u.getCantIngresos()%></td>
         <td class="text-center"><%=u.getFechaRegistro()%></td>
         <td class="text-center"><%=u.getFechaEdicion()%></td>

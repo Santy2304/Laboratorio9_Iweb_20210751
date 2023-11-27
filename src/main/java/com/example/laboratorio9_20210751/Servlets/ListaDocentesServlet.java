@@ -35,7 +35,7 @@ public class ListaDocentesServlet extends HttpServlet {
 
             case "crear":
 
-                request.getRequestDispatcher("ListaDocentes/ListaDocentes.jsp").forward(request,response);
+                request.getRequestDispatcher("ListaDocentes/CrearDocente.jsp").forward(request,response);
 
                 break;
 
@@ -84,6 +84,24 @@ public class ListaDocentesServlet extends HttpServlet {
         switch (action){
 
             case "crear":
+
+                String nombreC = request.getParameter("nombre");
+                String correo = request.getParameter("correo");
+                String contrasena = request.getParameter("contrasena");
+
+                Usuario docente = new Usuario();
+
+                docente.setNombre(nombreC);
+                docente.setCorreo(correo);
+                docente.setContrasena(contrasena);
+
+                try {
+                    daoUsuario.guardarDocente(docente);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+                response.sendRedirect(request.getContextPath() + "/ListaDocentesServlet");
 
                 break;
 

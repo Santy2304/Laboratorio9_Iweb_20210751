@@ -170,4 +170,45 @@ public class DaoUsuario extends DaoBase {
         }
     }
 
+    public void guardarDocente(Usuario docente) throws SQLException {
+
+        String sql = "INSERT INTO usuario (idusuario,nombre, correo,password ,idrol,cantidad_ingresos,fecha_registro, fecha_edicion) "
+                + "VALUES (?, ?, ?, SHA2(?, 256),4 ,0,Now(), Now())";
+
+        try (Connection conn = this.getConection();
+             PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+            pstmt.setInt(1,nuevoId());
+            pstmt.setString(2, docente.getNombre());
+            pstmt.setString(3,docente.getCorreo());
+            pstmt.setString(4,docente.getContrasena());
+
+            pstmt.executeUpdate();
+        }
+    }
+
+
+    public int nuevoId(){
+        int idNuevo = 0;
+
+        String sql  = "SELECT idusuario\n" +
+                "FROM usuario\n" +
+                "ORDER BY idusuario DESC\n" +
+                "LIMIT 1";
+
+        try (Connection conn = getConection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                idNuevo = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        }
+
+        return idNuevo+1;
+    }
+
 }
